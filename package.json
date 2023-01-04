@@ -1,0 +1,26 @@
+{
+  "name": "messenger_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "start": "node-ts src/app.ts",
+    "build": "tsc --build ./tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheomiquel/messenger_back.git"
+  },
+  "author": "matheomiquel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheomiquel/messenger_back/issues"
+  },
+  "homepage": "https://github.com/matheomiquel/messenger_back#readme",
+  "dependencies": {
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1"
+  }
+}
