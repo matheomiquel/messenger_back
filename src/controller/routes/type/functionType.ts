@@ -1,4 +1,3 @@
-import { requestType } from "./requestType";
-import { responseType } from "./responseType";
-export type functionType =
-    (req: requestType<object | undefined>) => responseType<number, object | undefined>
+import { responseType } from './responseType'
+import { requestType}from './requestType'
+export type functionType = (req: requestType) => Promise<responseType<{}>>

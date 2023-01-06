@@ -1,2 +1,1 @@
-export { GetById } from "./getById";
-export { GetPagination } from "./getPagination";
+export { GetById } from './getById'
