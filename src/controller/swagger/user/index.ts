@@ -1,6 +1,8 @@
-export { getAllSwager } from "./getAll";
-export { getByTokenSwagger } from "./getByToken";
-export { getConversationsFromUserSwagger } from "./getConversationsFromUser";
-export { GetByIdSwagger } from "./getUserById";
-export { loginSwagger } from "./login";
-export { registerSwagger } from "./register";
+export { AcceptFriendRequestSwagger } from './acceptFriendRequest'
+export { addFriendSwagger } from './addFriend'
+export { loginSwagger } from './login'
+export { registerSwagger } from './register'
+export { getAllSwager } from './getAll'
+export { getAllExceptMyfriendSwagger } from './getAllExcpetMyFriend'
+export { getfriendSwagger } from './getFriend'
+export { getMeSwagger } from './getMe'
