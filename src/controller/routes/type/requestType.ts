@@ -1,4 +1,8 @@
-export type requestType = {
+interface ObjectType {
+  [key: string]: any
+}
+
+export type requestType<Body> = {
     body: {
         [key: string]: any
     },
