@@ -1,12 +1,6 @@
 export {
-    registerSwagger,
-    AcceptFriendRequestSwagger,
-    addFriendSwagger,
-    loginSwagger,
     getAllSwager,
-    getAllExceptMyfriendSwagger,
-    getfriendSwagger,
-    getMeSwagger
+    registerSwagger
 } from './user'
 export { tags } from './tags'
 export { swaggerConfig } from './swaggerConfig'

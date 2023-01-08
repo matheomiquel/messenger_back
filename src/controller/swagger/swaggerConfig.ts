@@ -1,20 +1,17 @@
 import {
-    registerSwagger,
-    loginSwagger,
-    AcceptFriendRequestSwagger,
-    addFriendSwagger,
     getAllSwager,
-    getAllExceptMyfriendSwagger,
-    getfriendSwagger,
-    getMeSwagger
+    registerSwagger,
+    GetByIdSwagger,
+    loginSwagger,
+    getByTokenSwagger
 } from './user'
 import { tags } from './tags'
 export const swaggerConfig = {
     openapi: "3.0.0",
     info: {
         version: "1.0.0", //version of the OpenAPI Specification
-        title: "Loup-garou back",
-        description: "Loup-garou",
+        title: "Messenger back",
+        description: "Messenger",
     },
 
     components: {
@@ -26,9 +23,9 @@ export const swaggerConfig = {
             }
         }
     },
-    security: {
+    security: [{
         bearerAuth: []
-    },
+    }],
     host: `127.0.0.1:${process.env.PORT ?? 3000}`,
     exposeRoute: true,
     tags: [tags.user],
@@ -38,12 +35,9 @@ export const swaggerConfig = {
     paths: {
         ...registerSwagger,
         ...loginSwagger,
-        ...AcceptFriendRequestSwagger,
-        ...addFriendSwagger,
         ...getAllSwager,
-        ...getAllExceptMyfriendSwagger,
-        ...getfriendSwagger,
-        ...getMeSwagger
+        ...GetByIdSwagger,
+        ...getByTokenSwagger
     }
 }
 

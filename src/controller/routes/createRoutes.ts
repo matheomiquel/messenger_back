@@ -22,7 +22,7 @@ export class CreateRoute {
             this.handlerFunction(request, res, newHandler)
         })
     }
-    async handlerFunction(req: requestType, res: Response, handler: functionType) {
+    async handlerFunction(req: requestType<any>, res: Response, handler: functionType) {
         try {
             const result = await handler(req)
             res.status(result.status).send(result.data)
@@ -31,6 +31,7 @@ export class CreateRoute {
                 const error = await e as ErrorType
                 return res.status(error.status).send(error.message)
             }
+            console.log(e);
            return res.status(500).send({message: 'erreur inconnue'})
         }
     }

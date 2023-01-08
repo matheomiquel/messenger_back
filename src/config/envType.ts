@@ -1,2 +1,5 @@
 import {Options } from 'sequelize'
-export type env = {[key :string]: Options}
+import { EnvironmentName } from './envName'
+export type env = {
+    [key in EnvironmentName]: Options
+}

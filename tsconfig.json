@@ -10,12 +10,14 @@
       "es2015",
       "es2017"
     ],
+    "target": "es6",
     "baseUrl": "./src",
     "paths": {
       "@src/*" : ["./*"],
       "@controller/*": ["./controller/*"],
       "@domain/*": ["./domain/*"],
-      "@data": ["./data/*"]
+      "@data/*": ["./data/*"],
+      "@test/*": ["./__test__/*"]
     }
   }
 }
