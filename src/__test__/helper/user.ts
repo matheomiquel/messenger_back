@@ -1,10 +1,10 @@
-import request, { agent } from "supertest";
+import request from "supertest";
 import { app } from '@src/app'
-agent(app);
+import { endpointUser } from "@controller/routes";
 export class UserHelper {
   async register({ name, email, password }: { name: string, email: string, password: string }) {
     return request(app)
-      .post("/user/register")
+      .post(`/${endpointUser}/register`)
       .send({
         name,
         email,
@@ -15,7 +15,7 @@ export class UserHelper {
   async login({ email, password }: { email: string, password: string }){
    
     return request(app)
-      .post("/user/login")
+      .post(`/${endpointUser}/login`)
       .send({
         email,
         password
@@ -23,7 +23,7 @@ export class UserHelper {
   }
   async getUserById({ token }: { token: string }){
     return request(app)
-      .get("/user/")
+      .get(`/${endpointUser}/`)
       .set("Authorization", `Bearer ${token}`)
   }
 }

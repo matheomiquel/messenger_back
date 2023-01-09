@@ -1,10 +1,9 @@
-import { UserHasUserModel } from './user_has_user'
 import { UserModel } from './user'
-
+import { MessageModel } from './message'
 (async () => {
     try {
         await UserModel.sync()
-        await UserHasUserModel.sync()
+        await MessageModel.sync();
     } catch (e) {
         console.log(e)
     }

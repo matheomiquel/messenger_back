@@ -1,8 +1,8 @@
 import { ValidationError } from 'joi'
-import { RegisterSchemaBody,LoginSchemaBody } from '@controller/schema'
+import { RegisterSchemaBody, LoginSchemaBody } from '@controller/schema'
 import { User } from '@src/domain/model'
 import { requestType } from '@controller/routes/type/requestType'
-import {createError} from '@src/createError'
+import { createError } from '@src/createError'
 import { LoginTypeRequest } from '../schema/user'
 export class UserValidator {
     async register(req: requestType<User>) {

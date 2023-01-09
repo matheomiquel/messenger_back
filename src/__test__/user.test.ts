@@ -1,9 +1,9 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
+import { describe, expect, beforeEach } from '@jest/globals';
 import { app } from '@src/app'
-import request, { agent } from "supertest";
+import request from "supertest";
 import { UserModel } from '@src/data/sequelizeModel';
 import { UserHelper } from '@test/helper';
-agent(app);
+import { endpointUser } from '@controller/routes';
 const userHelper = new UserHelper();
 const userData = {
   name: "Matheo",
@@ -20,16 +20,17 @@ beforeEach(async () => {
 
 describe('user module', () => {
   describe('get user', () => {
+
     it('get all users', async () => {
       const users = await request(app)
-        .get("/user/getAll")
+        .get(`/${endpointUser}/getAll`)
       expect(users.statusCode).toEqual(200);
       expect(users.body.length).toEqual(0)
     });
     it('get user by id', async () => {
       const createdUser = await userHelper.register(userData);
       const user = await request(app)
-        .get(`/user/${createdUser.body.id}`)
+        .get(`/${endpointUser}/${createdUser.body.id}`)
       expect(user.statusCode).toEqual(200);
       expect(user.body.name).toEqual(userData.name)
       expect(user.body.email).toEqual(userData.email)

@@ -14,7 +14,7 @@ export class UserDomain {
 
   async getById({ id }: { id: number }): Promise<User> {
     return this.userProvider.getById({ id })
-}
+  }
 
   async register({ name, email, password }: { name: string, email: string, password: string }): Promise<User> {
     const created = await this.userProvider.getByEmail({ email })
@@ -26,7 +26,7 @@ export class UserDomain {
 
   async login({ email, password }: { email: string, password: string }): Promise<User> {
     return this.userProvider.login({ email, password })
-}
+  }
 
   async createToken({ id }: { id: number }): Promise<string> {
     return sign({ id }, String(process.env.PRIVATE_KEY))
@@ -34,5 +34,5 @@ export class UserDomain {
 
   async getToken({ token }: { token: string }): Promise<JwtPayload> {
     return decode(String(token)) as JwtPayload
-}
+  }
 }
