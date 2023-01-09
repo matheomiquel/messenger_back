@@ -5,6 +5,13 @@ import {
     loginSwagger,
     getByTokenSwagger
 } from './user'
+
+import {
+    //readAllMessageSwager,
+    createMessageSwagger,
+    updateMessageSwagger,
+    messageCrudSwagger,
+} from './message'
 import { tags } from './tags'
 export const swaggerConfig = {
     openapi: "3.0.0",
@@ -37,7 +44,11 @@ export const swaggerConfig = {
         ...loginSwagger,
         ...getAllSwager,
         ...GetByIdSwagger,
-        ...getByTokenSwagger
+        ...getByTokenSwagger,
+        ...messageCrudSwagger
+        //...readAllMessageSwager,
+        //...createMessageSwagger,
+        //...updateMessageSwagger
     }
 }
 

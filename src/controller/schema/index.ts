@@ -7,9 +7,12 @@ export {
     AcceptFriendRequestSchemaBody,
     UserResponse,
     UsersResponse,
-    GetUserSchemaQuery,
     TokenHeader,
     RegisterTypeResponse,
     LoginTypeResponse
 } from './user'
-export { GetById } from './common'
+export {
+    MessageRequest,
+    MessageResponse
+} from './message'
+export { GetById, GetPagination } from './common'

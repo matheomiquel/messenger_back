@@ -6,11 +6,11 @@ import Express from 'express'
 import { Request, Response } from 'express'
 import { swaggerConfig } from './controller'
 import { CreateRoute } from './controller'
-import { UserService } from './controller/services';
-import { UserRoute } from './controller/routes/user';
-import { UserDomain } from './domain';
-import { UserData } from './data/services/user';
-import { UserValidator } from './controller/validator/user';
+import { UserService, MessageService } from './controller/services';
+import { UserRoute, MessageRoute } from './controller/routes';
+import { UserDomain, MessageDomain } from './domain/services';
+import { UserData, MessageData } from './data/services';
+import { CommonValidator, MessageValidator, UserValidator } from './controller/validator';
 
 const app = Express()
 app.use(cors());
@@ -33,19 +33,23 @@ app.get('/health', async function (req: Request, res: Response) {
 ////////////////////////////////VALIDATOR/////////////////////////////////////////
 
 const userValidator = new UserValidator();
-
+const messageValidator = new MessageValidator()
+const commonValidator = new CommonValidator()
 ////////////////////////////////DATA///////////////////////////////////////////////
 const userProvider = new UserData()
+const messageProvider = new MessageData()
 
 ////////////////////////////////DOMAIN/////////////////////////////////////////////
 const userDomain = new UserDomain({ userProvider })
+const messageDomain = new MessageDomain({ messageProvider })
 
 ////////////////////////////////CONTROLLER/////////////////////////////////////////
 
 const userService = new UserService({ userDomain, userValidator })
-
+const messageService = new MessageService({ messageDomain, userDomain, messageValidator, commonValidator })
 
 new UserRoute({ createRoute, userService })
+new MessageRoute({ createRoute, messageService })
 
 
 
@@ -54,9 +58,11 @@ app.all('*', async function (req: Request, res: Response) {
         message: 'route not found'
     })
 })
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`listen on port ${3000}`)
+    })
+}
 
-app.listen(PORT, () => {
-    console.log(`listen on port ${3000}`)
-})
 
 export { app }

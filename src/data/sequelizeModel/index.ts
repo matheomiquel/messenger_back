@@ -1,3 +1,3 @@
-export { UserHasUserModel } from './user_has_user'
+export { MessageModel } from './message'
 export { UserModel } from './user'
 export { sequelize } from './config'

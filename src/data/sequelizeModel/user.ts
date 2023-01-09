@@ -38,16 +38,4 @@ const UserModel: ModelDefined<UserDB, undefined> = sequelize.define('User',
     freezeTableName: true
   }
 )
-UserModel.belongsToMany(UserModel,
-  {
-    through: 'user_has_user',
-    as: 'friend',
-    foreignKey: 'user_id',
-  })
-UserModel.belongsToMany(UserModel,
-  {
-    through: 'user_has_user',
-    as: 'other_friend',
-    foreignKey: 'friend_id',
-  })
 export { UserModel }
