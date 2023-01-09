@@ -2,4 +2,6 @@ import * as Joi from 'joi'
 const unauthorizedSchema = Joi.object({
     message: Joi.array().items(Joi.string()).example(['you need to connect first'])
 })
-export { unauthorizedSchema }
+
+const unauthorizedError = "You need to be connected to do that"
+export { unauthorizedSchema,unauthorizedError }

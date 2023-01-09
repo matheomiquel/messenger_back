@@ -11,7 +11,7 @@
     "seed": "ts-node src/seeders/*.ts",
     "migrate": "ts-node src/data/sequelizeModel/migrationOrder.ts",
     "migrate:test": "cross-env NODE_ENV=test ts-node src/data/sequelizeModel/migrationOrder.ts",
-    "test": "jest --forceExit --runInBand"
+    "test": "jest --forceExit --runInBand --clearMocks"
   },
   "repository": {
     "type": "git",
