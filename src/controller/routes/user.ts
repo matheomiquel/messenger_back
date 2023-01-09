@@ -3,13 +3,13 @@ import { authMiddleware } from '../middleware'
 import { CreateRoute } from './createRoutes'
 import { GET, POST } from './type/requestTypeName'
 
-const endpoint = 'user'
+const endpointUser = 'user'
 export class UserRoute {
     constructor({ createRoute, userService }: { createRoute: CreateRoute, userService: UserService }) {
         createRoute.createHttpRoute(
             {
                 method: POST,
-                path: `/${endpoint}/register`,
+                path: `/${endpointUser}/register`,
                 handler: userService.register,
                 context: userService
             })
@@ -17,7 +17,7 @@ export class UserRoute {
         createRoute.createHttpRoute(
             {
                 method: POST,
-                path: `/${endpoint}/login`,
+                path: `/${endpointUser}/login`,
                 handler: userService.login,
                 context: userService
             })
@@ -25,14 +25,14 @@ export class UserRoute {
         createRoute.createHttpRoute(
             {
                 method: GET,
-                path: `/${endpoint}/getAll`,
+                path: `/${endpointUser}/getAll`,
                 handler: userService.getAll,
                 context: userService
             })
         createRoute.createHttpRoute(
             {
                 method: GET,
-                path: `/${endpoint}`,
+                path: `/${endpointUser}`,
                 middleware: [authMiddleware],
                 handler: userService.getByToken,
                 context: userService
@@ -40,11 +40,11 @@ export class UserRoute {
         createRoute.createHttpRoute(
             {
                 method: GET,
-                path: `/${endpoint}/:id`,
+                path: `/${endpointUser}/:id`,
                 handler: userService.getById,
                 context: userService
             })
-
-
     }
 }
+
+export {endpointUser}

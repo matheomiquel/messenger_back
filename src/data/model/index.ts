@@ -3,3 +3,7 @@ export {
     UserWithFriendDB,
     UserHasUserDB
 } from './user'
+
+export {
+    MessageDB
+} from './message'

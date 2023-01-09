@@ -1,1 +1,1 @@
-export {UserDomain} from './services'
+export { UserDomain, messageDomain } from './services'
