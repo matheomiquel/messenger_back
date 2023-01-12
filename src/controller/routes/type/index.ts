@@ -1,4 +1,4 @@
-export { functionType } from './functionType'
-export { methodType } from './methodType'
-export {responseType} from './responseType'
-export {requestType} from './requestType'
+export { functionType } from "./functionType";
+export { methodType } from "./methodType";
+export { requestType } from "./requestType";
+export { responseType } from "./responseType";

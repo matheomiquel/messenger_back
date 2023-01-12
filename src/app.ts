@@ -1,75 +1,105 @@
-import '@data/sequelizeModel/relation';
-import * as swaggerUI from 'swagger-ui-express';
-import { config } from 'dotenv'
-import cors from "cors";
-import * as bodyParser from "body-parser";
-import Express from 'express'
-import { Request, Response } from 'express'
-import { swaggerConfig } from './controller'
-import { CreateRoute } from './controller'
-import { UserService, MessageService, ConversationService } from './controller/services';
-import { UserRoute, MessageRoute, ConversationRoute } from './controller/routes';
-import { UserDomain, MessageDomain } from './domain/services';
-import { UserData, MessageData, ConversationData } from './data/services';
-import { CommonValidator, ConversationValidator, MessageValidator, UserValidator } from './controller/validator';
-import { ConversationDomain } from './domain/services/conversation';
+import "@data/sequelizeModel/relation";
 
-const app = Express()
+import {
+  AddUserRequest,
+  CreateConversationRequest,
+  CreateMessageRequest,
+  GetById,
+  LoginSchemaBody,
+  RegisterSchemaBody,
+  UpdateConversationRequest,
+  UpdateMessageRequest
+} from "@controller/schema";
+import {
+  ConversationModel, MessageModel, UserHasConverstionModel, UserModel
+} from "@data/sequelizeModel";
+import * as bodyParser from "body-parser";
+import cors from "cors";
+import { config } from "dotenv";
+import Express, { Request, Response, response } from "express";
+import * as swaggerUI from "swagger-ui-express";
+
+import { CreateRoute, swaggerConfig } from "./controller";
+import { ConversationRoute, MessageRoute, UserRoute } from "./controller/routes";
+import { ConversationService, MessageService, UserService } from "./controller/services";
+import {
+  CommonValidator, ConversationValidator, MessageValidator, UserValidator
+} from "./controller/validator";
+import { ConversationData, MessageData, UserData } from "./data/services";
+import { MessageDomain, UserDomain } from "./domain/services";
+import { ConversationDomain } from "./domain/services/conversation";
+
+const app = Express();
 app.use(cors());
 app.use(bodyParser.json());
 let path = ".env";
-if (process.env.APP_ENV)
-    path = `${path}.${process.env.APP_ENV}`;
-
+if (process.env.APP_ENV) path = `${path}.${process.env.APP_ENV}`;
 
 config({ path: path });
 const PORT = process.env.PORT ?? 3000;
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerConfig));
-const createRoute = new CreateRoute({ app })
+const createRoute = new CreateRoute({ app, res: response });
 
-app.get('/health', async function (req: Request, res: Response) {
-    res.status(204).send()
-})
+app.get("/health", async function checkAlive(req: Request, res: Response): Promise<Response> {
+  return res.status(204).send();
+});
 
-////////////////////////////////VALIDATOR/////////////////////////////////////////
+/// //////////////////////////////MODEL////////////////////////////////////////////
 
-const userValidator = new UserValidator();
-const messageValidator = new MessageValidator()
-const conversationValidator = new ConversationValidator()
-const commonValidator = new CommonValidator()
-////////////////////////////////DATA///////////////////////////////////////////////
-const userProvider = new UserData()
-const messageProvider = new MessageData()
-const conversationProvider = new ConversationData()
+/// /////////////////////////////VALIDATOR/////////////////////////////////////////
 
-////////////////////////////////DOMAIN/////////////////////////////////////////////
-const userDomain = new UserDomain({ userProvider })
-const messageDomain = new MessageDomain({ messageProvider, conversationProvider })
-const conversationDomain = new ConversationDomain({ conversationProvider, userProvider })
+const userValidator = new UserValidator({
+  registerSchemaBody: RegisterSchemaBody, loginSchemaBody: LoginSchemaBody
+});
+const messageValidator = new MessageValidator({
+  createMessageRequest: CreateMessageRequest, updateMessageRequest: UpdateMessageRequest
+});
+const conversationValidator = new ConversationValidator({
+  createConversationRequest: CreateConversationRequest,
+  updateConversationRequest: UpdateConversationRequest,
+  addUserRequest: AddUserRequest
+});
+const commonValidator = new CommonValidator({ getById: GetById });
+/// /////////////////////////////DATA///////////////////////////////////////////////
+const userProvider = new UserData({ userModel: UserModel });
+const messageProvider = new MessageData({ messageModel: MessageModel });
+const conversationProvider = new ConversationData({
+  conversationModel: ConversationModel, userHasConverstionModel: UserHasConverstionModel
+});
 
-////////////////////////////////CONTROLLER/////////////////////////////////////////
+/// /////////////////////////////DOMAIN/////////////////////////////////////////////
+const userDomain = new UserDomain({ userProvider });
+const messageDomain = new MessageDomain({ messageProvider, conversationProvider });
+const conversationDomain = new ConversationDomain({ conversationProvider, userProvider });
 
-const userService = new UserService({ userDomain, userValidator, commonValidator })
-const messageService = new MessageService({ messageDomain, userDomain, messageValidator, commonValidator })
-const conversationService = new ConversationService({ conversationDomain, userDomain, conversationValidator, commonValidator })
+/// /////////////////////////////CONTROLLER/////////////////////////////////////////
 
-new UserRoute({ createRoute, userService })
-new MessageRoute({ createRoute, messageService })
-new ConversationRoute({ createRoute, conversationService })
+const userService = new UserService({ userDomain, userValidator, commonValidator });
+const messageService = new MessageService({
+  messageDomain, userDomain, messageValidator, commonValidator
+});
+const conversationService = new ConversationService({
+  conversationDomain, conversationValidator, commonValidator
+});
 
+const userRoute = new UserRoute({ createRoute, userService });
+const messageRoute = new MessageRoute({ createRoute, messageService });
+const conversationRoute = new ConversationRoute({ createRoute, conversationService });
+userRoute.init();
+messageRoute.init();
+conversationRoute.init();
+const tutu = "toto";
+export { tutu };
+app.all("*", async function NotFound(req: Request, res: Response) {
+  res.status(404).send({
+    message: "route not found"
+  });
+});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`listen on port ${3000}`); // eslint-disable-line no-console
+  });
+}
 
-
-app.all('*', async function (req: Request, res: Response) {
-    res.status(404).send({
-        message: 'route not found'
-    })
-})
-if (process.env.NODE_ENV !== 'test')
-    app.listen(PORT, () => {
-        console.log(`listen on port ${3000}`)
-    })
-
-
-
-export { app }
+export { app };
