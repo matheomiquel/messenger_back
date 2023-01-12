@@ -44,6 +44,12 @@ const RegisterSchemaResponse = Joi.object({
     token: Joi.string().required()
 })
 
-type RegisterTypeResponse = {user:User,token:string }
+type RegisterTypeResponse = { user: User, token: string }
 
-export { RegisterSchemaBody, RegisterSchemaResponse,RegisterTypeResponse };
+type RegisterSchemaBodyType = {
+    name: string,
+    email: string,
+    password: string
+}
+
+export { RegisterSchemaBody, RegisterSchemaResponse, RegisterTypeResponse, RegisterSchemaBodyType };

@@ -1,7 +1,19 @@
 import Joi from 'joi';
 const content = "Je suis un exemple de contenue de message"
-const MessageRequest = Joi.object({
-    content: Joi.string().required().example(content)
+const CreateMessageRequest = Joi.object({
+    content: Joi.string().required().example(content),
+    conversationId: Joi.number().required().positive().example(1)
 })
 
-export { MessageRequest };
+type CreateMessageRequestType = {
+    content: string,
+    conversationId: number
+}
+
+type CreateMessageResponseType = {
+    id: number,
+    content: string,
+    conversationId: number
+}
+
+export { CreateMessageRequest, CreateMessageRequestType, CreateMessageResponseType };

@@ -3,15 +3,17 @@ import {
     registerSwagger,
     GetByIdSwagger,
     loginSwagger,
-    getByTokenSwagger
+    getByTokenSwagger,
+    getConversationsFromUserSwagger
 } from './user'
 
 import {
-    //readAllMessageSwager,
-    createMessageSwagger,
-    updateMessageSwagger,
     messageCrudSwagger,
 } from './message'
+
+import {
+    conversationSwagger
+} from './conversation'
 import { tags } from './tags'
 export const swaggerConfig = {
     openapi: "3.0.0",
@@ -35,7 +37,7 @@ export const swaggerConfig = {
     }],
     host: `127.0.0.1:${process.env.PORT ?? 3000}`,
     exposeRoute: true,
-    tags: [tags.user],
+    tags: Object.values(tags),
     schemes: ["http"],
     consumes: ["application/json"],
     produces: ["application/json"],
@@ -45,10 +47,9 @@ export const swaggerConfig = {
         ...getAllSwager,
         ...GetByIdSwagger,
         ...getByTokenSwagger,
-        ...messageCrudSwagger
-        //...readAllMessageSwager,
-        //...createMessageSwagger,
-        //...updateMessageSwagger
+        ...messageCrudSwagger,
+        ...conversationSwagger,
+        ...getConversationsFromUserSwagger
     }
 }
 

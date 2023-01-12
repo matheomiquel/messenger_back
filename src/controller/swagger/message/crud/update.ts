@@ -9,7 +9,7 @@ const updateMessageSwagger = {
     produces: ["application/json"],
     parameters: formattingParameters({ parameters }),
     responses: {
-        204: { ...formattingBody({ description: "update message and return nothing", schema: UserResponse }) },
+        204: { ...formattingBody({ description: "update message and return nothing"}) },
         400: { ...formattingBody({ description: badResquestError, schema: badRequestSchema }) },
         401: { ...formattingBody({ description: unauthorizedError, schema: unauthorizedSchema }) },
         403: { ...formattingBody({ description: forbidenError, schema: forbidenSchema }) },

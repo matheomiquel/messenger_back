@@ -1,3 +1,3 @@
 export { UserDB } from './userDB'
-export { UserWithFriendDB } from './userWithFriend'
-export { UserHasUserDB } from './UserHasUserDB'
+export { UserWithConversationDB } from './UserWithConversationDB'
+export { UserHasConversationDB } from './UserHasConversationDB'

@@ -1,7 +1,9 @@
 import j2s from 'joi-to-swagger'
 import * as Joi from 'joi'
 const formattingBody = function ({ description, format = 'application/json', schema }:
-    { description: string, format?: string, schema: Joi.Schema }) {
+    { description: string, format?: string, schema?: Joi.Schema }) {
+    if (!schema)
+        return { description: description }
     return {
         description: description,
         content: {
