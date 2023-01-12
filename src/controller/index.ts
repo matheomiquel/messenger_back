@@ -1,2 +1,2 @@
-export {CreateRoute} from './routes'
-export {swaggerConfig} from './swagger'
+export { CreateRoute } from "./routes";
+export { swaggerConfig } from "./swagger";

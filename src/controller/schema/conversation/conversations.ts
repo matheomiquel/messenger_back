@@ -1,5 +1,6 @@
-import { ConversationResponse } from './conversation'
-import Joi from 'joi'
-const ConversationsResponse = Joi.array().items(ConversationResponse)
+import Joi from "joi";
 
-export { ConversationsResponse } 
+import { ConversationResponse } from "./conversation";
+const ConversationsResponse = Joi.array().items(ConversationResponse);
+
+export { ConversationsResponse };

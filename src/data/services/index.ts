@@ -1,3 +1,3 @@
-export { MessageData } from './message'
-export { UserData } from './user'
-export { ConversationData } from './conversation'
+export { ConversationData } from "./conversation";
+export { MessageData } from "./message";
+export { UserData } from "./user";

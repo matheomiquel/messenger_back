@@ -1,9 +1,9 @@
-import Joi from 'joi';
-const content = "Je suis un exemple de contenue de message"
+import Joi from "joi";
+const content = "Je suis un exemple de contenue de message";
 const CreateMessageRequest = Joi.object({
-    content: Joi.string().required().example(content),
-    conversationId: Joi.number().required().positive().example(1)
-})
+  content: Joi.string().required().example(content),
+  conversationId: Joi.number().required().positive().example(1)
+});
 
 type CreateMessageRequestType = {
     content: string,

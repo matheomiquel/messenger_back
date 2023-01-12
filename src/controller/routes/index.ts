@@ -1,4 +1,4 @@
-export { CreateRoute } from './createRoutes'
-export { MessageRoute, endpointMessage } from './message'
-export { UserRoute, endpointUser } from './user'
-export { ConversationRoute , endpointConversation} from './conversation'
+export { ConversationRoute, endpointConversation } from "./conversation";
+export { CreateRoute } from "./createRoutes";
+export { endpointMessage, MessageRoute } from "./message";
+export { endpointUser, UserRoute } from "./user";

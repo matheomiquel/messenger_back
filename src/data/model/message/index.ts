@@ -1,1 +1,1 @@
-export { MessageDB } from './messageDB'
+export { MessageDB } from "./messageDB";

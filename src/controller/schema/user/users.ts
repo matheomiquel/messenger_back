@@ -1,6 +1,7 @@
-import * as Joi from 'joi'
-import { UserResponse } from './user'
+import * as Joi from "joi";
 
-const UsersResponse = Joi.array().items(UserResponse)
+import { UserResponse } from "./user";
+
+const UsersResponse = Joi.array().items(UserResponse);
 
 export { UsersResponse };
