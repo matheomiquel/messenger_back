@@ -1,7 +1,9 @@
 import { DataTypes, ModelDefined } from 'sequelize'
 import { sequelize } from './config'
 import { UserDB } from '../model'
-const table = 'user'
+import { USER, USER_HAS_CONVERSATION } from './tableName'
+import { ConversationModel } from './conversation'
+const table = USER
 
 const UserModel: ModelDefined<UserDB, undefined> = sequelize.define('User',
   {
@@ -38,4 +40,5 @@ const UserModel: ModelDefined<UserDB, undefined> = sequelize.define('User',
     freezeTableName: true
   }
 )
+
 export { UserModel }

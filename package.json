@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "dev": "nodemon --exec typescript-module-alias ./src/app.ts",
+    "dev": " nodemon --exec typescript-module-alias ./src/app.ts",
     "start": "ts-node src/app.ts",
     "build": "typescript-module-alias-build  ./src ",
     "prod": "node dist/app.js",

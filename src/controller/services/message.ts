@@ -2,6 +2,7 @@ import { MessageDomain, UserDomain } from '@domain/services'
 import { requestType, responseType } from '@controller/routes/type';
 import { MessageValidator, CommonValidator } from '@controller/validator';
 import { Message } from '@src/domain/model';
+import { CreateMessageRequestType, CreateMessageResponseType, UpdateMessageRequestType } from '@controller/schema';
 export class MessageService {
     private readonly messageDomain: MessageDomain
     private readonly userDomain: UserDomain
@@ -24,28 +25,28 @@ export class MessageService {
         return { status: 200, data: users }
     }
 
-    async create(req: requestType<Message>): responseType<200, Message> {
+    async create(req: requestType<CreateMessageRequestType>): responseType<200, CreateMessageResponseType> {
         await this.messageValidator.create(req);
         const decodedToken = await this.userDomain.getToken({ token: String(req.token) })
-        const message = await this.messageDomain.create({ user_id: decodedToken.id, content: req.body.content })
+        const message = await this.messageDomain.create({ userId: decodedToken.id, content: req.body.content, conversationId: req.body.conversationId })
         return { status: 200, data: message }
     }
 
-    async update(req: requestType<undefined>): responseType<204, undefined> {
+    async update(req: requestType<UpdateMessageRequestType>): responseType<204, undefined> {
         Promise.all([
-            await this.commonValidator.id(req),
-            await this.messageValidator.create(req)
+            await this.commonValidator.id(req.params),
+            await this.messageValidator.update(req)
         ])
         const decodedToken = await this.userDomain.getToken({ token: String(req.token) })
-        await this.messageDomain.update({ id: req.params.id, user_id: decodedToken.id, content: req.body.content })
+        await this.messageDomain.update({ id: req.params.id, userId: decodedToken.id, content: req.body.content })
         return { status: 204, data: undefined }
     }
 
 
     async delete(req: requestType<undefined>): responseType<204, undefined> {
-        await this.commonValidator.id(req)
+        await this.commonValidator.id(req.params)
         const decodedToken = await this.userDomain.getToken({ token: String(req.token) })
-        await this.messageDomain.delete({ id: req.params.id, user_id: decodedToken.id });
+        await this.messageDomain.delete({ id: req.params.id, userId: decodedToken.id });
         return { status: 204, data: undefined }
     }
 }

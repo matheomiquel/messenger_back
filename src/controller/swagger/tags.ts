@@ -6,5 +6,9 @@ export const tags = {
     message: {
         name: 'message',
         description: 'documentation for message'
+    },
+    conversation: {
+        name: 'conversation',
+        description: 'documentation for conversation'
     }
 }

@@ -3,12 +3,13 @@ import { app } from '@src/app'
 import { endpointMessage } from "@controller/routes";
 
 export class MessageHelper {
-    async create({ token, content }: { token: string, content: string }) {
+    async create({ token, content, conversationId }: { token: string, content: string, conversationId: number }) {
         return request(app)
             .post(`/${endpointMessage}`)
             .set("Authorization", `Bearer ${token}`)
             .send({
-                content
+                content,
+                conversationId
             })
     }
     async read({ token }: { token: string }) {

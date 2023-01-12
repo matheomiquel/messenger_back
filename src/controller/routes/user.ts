@@ -26,6 +26,7 @@ export class UserRoute {
             {
                 method: GET,
                 path: `/${endpointUser}/getAll`,
+                middleware: [authMiddleware],
                 handler: userService.getAll,
                 context: userService
             })
@@ -37,14 +38,25 @@ export class UserRoute {
                 handler: userService.getByToken,
                 context: userService
             })
+
+        createRoute.createHttpRoute(
+            {
+                method: GET,
+                path: `/${endpointUser}/conversations`,
+                middleware: [authMiddleware],
+                handler: userService.getConversation,
+                context: userService
+            })
+
         createRoute.createHttpRoute(
             {
                 method: GET,
                 path: `/${endpointUser}/:id`,
+                middleware: [authMiddleware],
                 handler: userService.getById,
                 context: userService
             })
     }
 }
 
-export {endpointUser}
+export { endpointUser }

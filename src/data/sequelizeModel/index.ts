@@ -1,3 +1,5 @@
 export { MessageModel } from './message'
+export { ConversationModel } from './conversation'
+export { UserHasConverstionModel } from './user_has_conversation'
 export { UserModel } from './user'
 export { sequelize } from './config'

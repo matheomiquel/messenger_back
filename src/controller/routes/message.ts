@@ -1,5 +1,5 @@
 import { MessageService } from '@controller/services'
-import { authMiddleware } from '../middleware'
+import { authMiddleware } from '@controller/middleware'
 import { CreateRoute } from './createRoutes'
 import { GET, POST, PUT, DELETE } from './type/requestTypeName'
 

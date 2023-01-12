@@ -1,10 +1,12 @@
 export class Message {
     id: number
-    user_id: number
+    userId: number
     content: string
-    constructor({ id, user_id, content }: { id: number, user_id: number, content: string }) {
+    conversationId: number
+    constructor({ id, userId, content, conversationId }: { id: number, userId: number, content: string, conversationId: number }) {
         this.id = id
-        this.user_id = user_id
+        this.userId = userId
         this.content = content
+        this.conversationId = conversationId
     }
 }
