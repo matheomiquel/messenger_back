@@ -1,18 +1,21 @@
 import { hash } from 'bcrypt'
 import { UserDomain } from '@domain/services'
-import { responseType } from "../routes/type"
+import { responseType } from "@controller/routes/type"
 import { requestType } from "@controller/routes/type"
-import { User, UserWithToken } from '@src/domain/model';
-import { UserValidator } from '../validator/user';
-import { LoginTypeResponse, LoginTypeRequest } from '../schema/user';
+import { UserWithToken } from '@src/domain/model';
+import { UserValidator, CommonValidator } from '@controller/validator';
+import { LoginTypeResponse, LoginTypeRequest, RegisterSchemaBodyType, UserResponseType, UserWithTokenResponseType } from '@controller/schema/user';
+import { ConversationResponseType } from '../schema';
 export class UserService {
     private readonly userDomain: UserDomain
     private readonly userValidator: UserValidator
-    constructor({ userDomain, userValidator }: { userDomain: UserDomain, userValidator: UserValidator }) {
+    private readonly commonValidator: CommonValidator
+    constructor({ userDomain, userValidator, commonValidator }: { userDomain: UserDomain, userValidator: UserValidator, commonValidator: CommonValidator }) {
         this.userDomain = userDomain;
         this.userValidator = userValidator;
+        this.commonValidator = commonValidator
     }
-    async getAll(req: requestType<undefined>): responseType<200, User[]> {
+    async getAll(req: requestType<undefined>): responseType<200, UserResponseType[]> {
         const getUserData = {
             order: String(req.query.order || "ASC"),
             limit: Number(req.query.limit) || 10,
@@ -22,7 +25,7 @@ export class UserService {
         return { status: 200, data: users }
     }
 
-    async register(req: requestType<User>): responseType<201, UserWithToken> {
+    async register(req: requestType<RegisterSchemaBodyType>): responseType<201, UserWithTokenResponseType> {
         await this.userValidator.register(req)
         const registerData = {
             name: req.body.name,
@@ -46,14 +49,21 @@ export class UserService {
 
     }
 
-    async getById(req: requestType<User>): responseType<200, User> {
+    async getById(req: requestType<undefined>): responseType<200, UserResponseType> {
+        await this.commonValidator.id(req.params)
         const user = await this.userDomain.getById({ id: req.params.id })
         return { status: 200, data: user }
     }
 
-    async getByToken(req: requestType<undefined>): responseType<200, User> {
+    async getByToken(req: requestType<undefined>): responseType<200, UserResponseType> {
         const decodedToken = await this.userDomain.getToken({ token: String(req.token) })
         const user = await this.userDomain.getById({ id: decodedToken.id })
+        return { status: 200, data: user }
+    }
+
+    async getConversation(req: requestType<undefined>): responseType<200, ConversationResponseType[]> {
+        const decodedToken = await this.userDomain.getToken({ token: String(req.token) })
+        const user = await this.userDomain.getConversation({ id: decodedToken.id })
         return { status: 200, data: user }
     }
 }
