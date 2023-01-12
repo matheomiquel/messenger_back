@@ -1,2 +1,2 @@
-export {EnvironmentName} from './envName'
-export {config} from './config'
+export { config } from "./config";
+export { EnvironmentName } from "./envName";

@@ -1,20 +1,30 @@
+import { Express } from "express";
 import request from "supertest";
-import { app } from '@src/app'
-import { endpointMessage } from "@controller/routes";
 
 export class MessageHelper {
-    async create({ token, content, conversationId }: { token: string, content: string, conversationId: number }) {
-        return request(app)
-            .post(`/${endpointMessage}`)
-            .set("Authorization", `Bearer ${token}`)
-            .send({
-                content,
-                conversationId
-            })
-    }
-    async read({ token }: { token: string }) {
-        return request(app)
-            .get(`/${endpointMessage}`)
-            .set("Authorization", `Bearer ${token}`)
-    }
+  private readonly app: Express;
+
+  private readonly endpointMessage: string;
+
+  constructor({ app, endpointMessage }: { app: Express, endpointMessage: string }) {
+    this.app = app;
+    this.endpointMessage = endpointMessage;
+  }
+
+  async create({ token, content, conversationId }:
+    { token: string, content: string, conversationId: number }) {
+    return request(this.app)
+      .post(`/${this.endpointMessage}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        content,
+        conversationId
+      });
+  }
+
+  async read({ token }: { token: string }) {
+    return request(this.app)
+      .get(`/${this.endpointMessage}`)
+      .set("Authorization", `Bearer ${token}`);
+  }
 }

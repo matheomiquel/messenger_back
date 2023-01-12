@@ -6,5 +6,5 @@ type UserWithTokenResponseType = {
 }
 
 export {
-    UserWithTokenResponseType
-}
+  UserWithTokenResponseType
+};

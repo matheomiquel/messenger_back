@@ -1,13 +1,11 @@
 export {
-    UserDB,
-    UserWithConversationDB
-} from './user'
-
+  ConversationDB,
+  ConversationWithUsersDB
+} from "./conversation";
 export {
-    MessageDB
-} from './message'
-
+  MessageDB
+} from "./message";
 export {
-    ConversationDB,
-    ConversationWithUsersDB
-} from './conversation'
+  UserDB,
+  UserWithConversationDB
+} from "./user";

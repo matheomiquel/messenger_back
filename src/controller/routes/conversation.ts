@@ -1,69 +1,93 @@
-import { ConversationService } from '@controller/services'
-import { authMiddleware } from '@controller/middleware'
-import { CreateRoute } from './createRoutes'
-import { GET, POST, PUT, DELETE } from './type/requestTypeName'
+import { authMiddleware } from "@controller/middleware";
+import { ConversationService } from "@controller/services";
 
-const endpointConversation = 'conversation'
+import { CreateRoute } from "./createRoutes";
+import {
+  DELETE,
+  GET, POST, PUT
+} from "./type/requestTypeName";
+
+const endpointConversation = "conversation";
 
 export class ConversationRoute {
-    constructor({ createRoute, conversationService }: { createRoute: CreateRoute, conversationService: ConversationService }) {
-        createRoute.createHttpRoute(
-            {
-                method: GET,
-                path: `/${endpointConversation}`,
-                handler: conversationService.read,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
-        createRoute.createHttpRoute(
-            {
-                method: GET,
-                path: `/${endpointConversation}/:id`,
-                handler: conversationService.readConversationByUserId,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
-        createRoute.createHttpRoute(
-            {
-                method: POST,
-                path: `/${endpointConversation}`,
-                handler: conversationService.create,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
+  private readonly createRoute: InstanceType<typeof CreateRoute>;
 
-        createRoute.createHttpRoute(
-            {
-                method: PUT,
-                path: `/${endpointConversation}/:id`,
-                handler: conversationService.update,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
-        createRoute.createHttpRoute(
-            {
-                method: DELETE,
-                path: `/${endpointConversation}/:id`,
-                handler: conversationService.delete,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
-        createRoute.createHttpRoute(
-            {
-                method: POST,
-                path: `/${endpointConversation}/addUser`,
-                handler: conversationService.addUserToConversation,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
-        createRoute.createHttpRoute(
-            {
-                method: POST,
-                path: `/${endpointConversation}/removeUser`,
-                handler: conversationService.removeUserFromConversation,
-                middleware: [authMiddleware],
-                context: conversationService
-            })
-    }
+  private readonly conversationService: InstanceType<typeof ConversationService>;
+
+  constructor({ createRoute, conversationService }:
+    {
+      createRoute: InstanceType<typeof CreateRoute>,
+      conversationService: InstanceType<typeof ConversationService>
+    }) {
+    this.createRoute = createRoute;
+    this.conversationService = conversationService;
+  }
+
+  init() {
+    this.createRoute.createHttpRoute(
+      {
+        method: GET,
+        path: `/${endpointConversation}`,
+        handler: this.conversationService.read,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+    this.createRoute.createHttpRoute(
+      {
+        method: GET,
+        path: `/${endpointConversation}/:id`,
+        handler: this.conversationService.readConversationByUserId,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+    this.createRoute.createHttpRoute(
+      {
+        method: POST,
+        path: `/${endpointConversation}`,
+        handler: this.conversationService.create,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+
+    this.createRoute.createHttpRoute(
+      {
+        method: PUT,
+        path: `/${endpointConversation}/:id`,
+        handler: this.conversationService.update,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+    this.createRoute.createHttpRoute(
+      {
+        method: DELETE,
+        path: `/${endpointConversation}/:id`,
+        handler: this.conversationService.delete,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+    this.createRoute.createHttpRoute(
+      {
+        method: POST,
+        path: `/${endpointConversation}/addUser`,
+        handler: this.conversationService.addUserToConversation,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+    this.createRoute.createHttpRoute(
+      {
+        method: POST,
+        path: `/${endpointConversation}/removeUser`,
+        handler: this.conversationService.removeUserFromConversation,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+  }
 }
-export { endpointConversation }
+export { endpointConversation };

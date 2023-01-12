@@ -1,11 +1,12 @@
-import { DataTypes, ModelDefined } from 'sequelize'
-import { sequelize } from './config'
-import { UserDB } from '../model'
-import { USER, USER_HAS_CONVERSATION } from './tableName'
-import { ConversationModel } from './conversation'
-const table = USER
+import { DataTypes, ModelDefined } from "sequelize";
 
-const UserModel: ModelDefined<UserDB, undefined> = sequelize.define('User',
+import { UserDB } from "../model";
+import { sequelize } from "./config";
+import { USER } from "./tableName";
+const table = USER;
+
+const UserModel: ModelDefined<UserDB, undefined> = sequelize.define(
+  "User",
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -32,13 +33,13 @@ const UserModel: ModelDefined<UserDB, undefined> = sequelize.define('User',
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: false
-    },
+    }
   },
   {
     tableName: table,
     underscored: true,
     freezeTableName: true
   }
-)
+);
 
-export { UserModel }
+export { UserModel };
