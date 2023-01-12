@@ -1,2 +1,3 @@
-export { MessageRequest } from './create'
-export { MessageResponse } from './message'
+export { CreateMessageRequest, CreateMessageRequestType, CreateMessageResponseType } from './create'
+export { CreateMessageResponse, } from './message'
+export { UpdateMessageRequest, UpdateMessageRequestType } from './update'

@@ -1,7 +1,7 @@
 import { UserInterface } from "@src/domain/interface";
-import { User } from "@src/domain/model";
-import { UserDB } from "@data/model";
-import { UserModel } from "@data/sequelizeModel";
+import { Conversation, User } from "@src/domain/model";
+import { UserDB, UserWithConversationDB } from "@data/model";
+import { ConversationModel, UserModel } from "@data/sequelizeModel";
 import { createError } from "@src/createError";
 import { compareSync } from 'bcrypt';
 
@@ -56,8 +56,19 @@ export class UserData implements UserInterface {
             }
         }) as unknown as UserDB
         if (!user || !compareSync(password, user.password)) {
-            throw await createError({ message: ['user not found'], status: 404 })
+            throw await createError({ message: ['incorrect username or password.'], status: 400 })
         }
         return new User({ id: user.id, name: user.name, email: user.email })
+    }
+
+    async getConversation({ id }: { id: number; }): Promise<Conversation[]> {
+        const user = await UserModel.findByPk(id, {
+            include: [{
+                model: ConversationModel,
+                as: 'user_conversation'
+            }]
+        }) as unknown as UserWithConversationDB
+        
+        return user.user_conversation.map((conversation) => new Conversation(conversation));
     }
 }

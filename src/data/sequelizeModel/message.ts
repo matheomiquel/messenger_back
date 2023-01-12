@@ -1,8 +1,10 @@
 import { DataTypes, ModelDefined } from 'sequelize'
 import { sequelize } from './config'
 import { MessageDB } from '../model'
+import { MESSAGE } from './tableName'
 import { UserModel } from './user'
-const table = 'message'
+import { ConversationModel } from './conversation'
+const table = MESSAGE
 
 const MessageModel: ModelDefined<MessageDB, undefined> = sequelize.define('Message',
     {
@@ -19,7 +21,18 @@ const MessageModel: ModelDefined<MessageDB, undefined> = sequelize.define('Messa
                 model: {
                     tableName: 'user',
                 }
-                
+
+            },
+        },
+        conversation_id: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            references: {
+                key: 'id',
+                model: {
+                    tableName: 'conversation',
+                }
+
             },
         },
         content: {
@@ -41,12 +54,7 @@ const MessageModel: ModelDefined<MessageDB, undefined> = sequelize.define('Messa
         freezeTableName: true
     }
 )
-MessageModel.belongsTo(UserModel,
-    {
-        targetKey: 'id',
-        as: 'message_user',
-        foreignKey: 'user_id',
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    })
+
+
+
 export { MessageModel }

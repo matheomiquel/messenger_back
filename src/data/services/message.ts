@@ -10,8 +10,8 @@ export class MessageData implements MessageInterface {
             limit,
             order: [['createdAt', order]],
         }) as unknown as MessageDB[];
-        return messageDB.map((mess =>
-            new Message({ id: mess.id, user_id: mess.user_id, content: mess.content })
+        return messageDB.map((message =>
+            new Message({ id: message.id, userId: message.user_id, content: message.content, conversationId: message.conversation_id })
         ))
     }
 
@@ -20,26 +20,27 @@ export class MessageData implements MessageInterface {
         if (!message) {
             throw await createError({ message: ['Message not found'], status: 404 })
         }
-        return new Message({ id: message.id, content: message.content, user_id: message.user_id })
+        return new Message({ id: message.id, content: message.content, userId: message.user_id, conversationId: message.conversation_id })
     }
 
-    async create({ user_id, content }: { user_id: number; content: string; }): Promise<Message> {
+    async create({ userId, content, conversationId }: { userId: number; content: string; conversationId: number }): Promise<Message> {
         const message = await MessageModel.create({
-            user_id,
-            content
+            user_id: userId,
+            content,
+            conversation_id: conversationId
         }) as unknown as MessageDB;
-        return new Message({ id: message.id, user_id: message.user_id, content: message.content })
+        return new Message({ id: message.id, userId: message.user_id, content: message.content, conversationId: message.conversation_id })
     }
 
     async update({ id, content }: { id: number; content: string; }): Promise<void> {
-        const message = await MessageModel.update({
+        await MessageModel.update({
             content: content
         },
             {
                 where: {
                     id: id,
                 }
-            }) as unknown as MessageDB;
+            })
     }
 
     async delete({ id }: { id: number; }): Promise<void> {

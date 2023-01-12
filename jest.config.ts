@@ -89,7 +89,7 @@ export default {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    "^@domain$": "<rootDir>/src/domain/*",
+    "^@domain/(.*)": "<rootDir>/src/domain/$1",
     "^@data/(.*)": "<rootDir>/src/data/$1",
     "^@controller/(.*)": "<rootDir>/src/controller/$1",
     "^@src/(.*)": "<rootDir>/src/$1",

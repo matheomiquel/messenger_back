@@ -2,7 +2,7 @@
 import { ErrorType } from '@src/errorType';
 import { sign, decode, JwtPayload } from 'jsonwebtoken'
 import { UserInterface } from '../interface';
-import { User } from '../model';
+import { Conversation, User } from '../model';
 export class UserDomain {
   private readonly userProvider: UserInterface
   constructor({ userProvider }: { userProvider: UserInterface }) {
@@ -34,5 +34,9 @@ export class UserDomain {
 
   async getToken({ token }: { token: string }): Promise<JwtPayload> {
     return decode(String(token)) as JwtPayload
+  }
+
+  async getConversation({ id }: { id: number }): Promise<Conversation[]> {
+    return this.userProvider.getConversation({ id });
   }
 }

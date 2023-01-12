@@ -3,9 +3,7 @@ interface ObjectType {
 }
 
 export type requestType<Body> = {
-    body: {
-        [key: string]: any
-    },
+    body: Body
     query: {
         [key: string]: any
     },

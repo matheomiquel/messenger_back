@@ -8,4 +8,10 @@ const UserResponse = Joi.object({
     email: Joi.string().required().email().example(email),
 })
 
-export { UserResponse };
+type UserResponseType = {
+    id: number,
+    name: string,
+    email: string
+}
+
+export { UserResponse, UserResponseType };

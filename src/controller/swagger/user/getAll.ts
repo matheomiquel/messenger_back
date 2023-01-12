@@ -8,7 +8,7 @@ const getAllSwager = {
     [`/${endpointUser}/getAll`]: {
         get: {
             tags: [tags.user.name],
-            description: "Accept a friend request",
+            description: "Get all users",
             parameters: formattingParameters({ parameters }),
             produces: ["application/json"],
             responses: {

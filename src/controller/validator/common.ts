@@ -1,12 +1,10 @@
-import { Message } from "@src/domain/model"
-import { requestType } from "../routes/type"
 import { ValidationError } from 'joi'
 import { createError } from '@src/createError'
 import { GetById } from "@controller/schema"
 export class CommonValidator {
-    async id(req: requestType<Message>) {
+    async id(params: Object) {
         try {
-            await GetById.validateAsync(req.params, {
+            await GetById.validateAsync(params, {
                 abortEarly: false
             })
         } catch (e) {
