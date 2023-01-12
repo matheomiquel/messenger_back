@@ -1,6 +1,6 @@
+export { swaggerConfig } from "./swaggerConfig";
+export { tags } from "./tags";
 export {
-    getAllSwager,
-    registerSwagger
-} from './user'
-export { tags } from './tags'
-export { swaggerConfig } from './swaggerConfig'
+  getAllSwager,
+  registerSwagger
+} from "./user";

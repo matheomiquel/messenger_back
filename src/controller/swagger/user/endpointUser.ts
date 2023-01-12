@@ -1,2 +1,2 @@
-const endpointUser = 'user'
-export { endpointUser }
+const endpointUser = "user";
+export { endpointUser };

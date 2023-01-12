@@ -1,7 +1,4 @@
-interface ObjectType {
-  [key: string]: any
-}
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export type requestType<Body> = {
     body: Body
     query: {

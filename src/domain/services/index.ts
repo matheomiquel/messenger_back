@@ -1,2 +1,2 @@
-export { UserDomain } from './user'
-export { MessageDomain } from './message'
+export { MessageDomain } from "./message";
+export { UserDomain } from "./user";

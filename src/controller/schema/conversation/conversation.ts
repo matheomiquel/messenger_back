@@ -1,16 +1,16 @@
-import Joi from 'joi'
-const name = "I'm an exemple of a conversation name"
+import Joi from "joi";
+const name = "I'm an exemple of a conversation name";
 
 const ConversationResponse = Joi.object({
-    id: Joi.number().required().example(1),
-    admin: Joi.number().required().example(1),
-    name: Joi.string().required().example(name),
-})
+  id: Joi.number().required().example(1),
+  admin: Joi.number().required().example(1),
+  name: Joi.string().required().example(name)
+});
 
 const ConversationRequest = Joi.object({
-    admin: Joi.number().required().example(1),
-    name: Joi.string().required().example(name),
-})
+  admin: Joi.number().required().example(1),
+  name: Joi.string().required().example(name)
+});
 
 type ConversationRequestType = {
     admin: number,
@@ -23,4 +23,7 @@ type ConversationResponseType = {
     name: string
 }
 
-export { ConversationResponse, ConversationRequest, ConversationResponseType, ConversationRequestType };
+export {
+  ConversationRequest, ConversationRequestType,
+  ConversationResponse, ConversationResponseType
+};

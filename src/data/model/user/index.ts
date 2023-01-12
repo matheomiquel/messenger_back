@@ -1,3 +1,3 @@
-export { UserDB } from './userDB'
-export { UserWithConversationDB } from './UserWithConversationDB'
-export { UserHasConversationDB } from './UserHasConversationDB'
+export { UserDB } from "./userDB";
+export { UserHasConversationDB } from "./UserHasConversationDB";
+export { UserWithConversationDB } from "./UserWithConversationDB";

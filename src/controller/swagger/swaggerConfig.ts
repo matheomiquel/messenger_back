@@ -1,55 +1,51 @@
 import {
-    getAllSwager,
-    registerSwagger,
-    GetByIdSwagger,
-    loginSwagger,
-    getByTokenSwagger,
-    getConversationsFromUserSwagger
-} from './user'
-
+  conversationSwagger
+} from "./conversation";
 import {
-    messageCrudSwagger,
-} from './message'
-
+  messageCrudSwagger
+} from "./message";
+import { tags } from "./tags";
 import {
-    conversationSwagger
-} from './conversation'
-import { tags } from './tags'
+  getAllSwager,
+  GetByIdSwagger,
+  getByTokenSwagger,
+  getConversationsFromUserSwagger,
+  loginSwagger,
+  registerSwagger
+} from "./user";
 export const swaggerConfig = {
-    openapi: "3.0.0",
-    info: {
-        version: "1.0.0", //version of the OpenAPI Specification
-        title: "Messenger back",
-        description: "Messenger",
-    },
+  openapi: "3.0.0",
+  info: {
+    version: "1.0.0", // version of the OpenAPI Specification
+    title: "Messenger back",
+    description: "Messenger"
+  },
 
-    components: {
-        securitySchemes: {
-            bearerAuth: {
-                type: 'http',
-                scheme: 'bearer',
-                bearerFormat: 'JWT'
-            }
-        }
-    },
-    security: [{
-        bearerAuth: []
-    }],
-    host: `127.0.0.1:${process.env.PORT ?? 3000}`,
-    exposeRoute: true,
-    tags: Object.values(tags),
-    schemes: ["http"],
-    consumes: ["application/json"],
-    produces: ["application/json"],
-    paths: {
-        ...registerSwagger,
-        ...loginSwagger,
-        ...getAllSwager,
-        ...GetByIdSwagger,
-        ...getByTokenSwagger,
-        ...messageCrudSwagger,
-        ...conversationSwagger,
-        ...getConversationsFromUserSwagger
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT"
+      }
     }
-}
-
+  },
+  security: [{
+    bearerAuth: []
+  }],
+  exposeRoute: true,
+  tags: Object.values(tags),
+  schemes: ["http"],
+  consumes: ["application/json"],
+  produces: ["application/json"],
+  paths: {
+    ...registerSwagger,
+    ...loginSwagger,
+    ...getAllSwager,
+    ...GetByIdSwagger,
+    ...getByTokenSwagger,
+    ...messageCrudSwagger,
+    ...conversationSwagger,
+    ...getConversationsFromUserSwagger
+  }
+};

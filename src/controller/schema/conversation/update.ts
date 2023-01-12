@@ -1,8 +1,8 @@
-import Joi from 'joi';
-const name = "i'm a name"
+import Joi from "joi";
+const name = "i'm a name";
 const UpdateConversationRequest = Joi.object({
-    name: Joi.string().required().example(name)
-})
+  name: Joi.string().required().example(name)
+});
 
 type UpdateConversationRequestType = {
     name: string,
