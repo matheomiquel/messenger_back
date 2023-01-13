@@ -1,15 +1,19 @@
-import { endpointConversation, endpointUser } from "@controller/routes";
+import { endpointConversation, endpointMessage, endpointUser } from "@controller/routes";
 import {
   afterAll,
   beforeEach, describe, expect, it
 } from "@jest/globals";
 import { app } from "@src/app";
-import { CreateConversationHelper, reset, UserHelper } from "@test/helper";
+import {
+  CreateConversationHelper, MessageHelper, MessageStory, reset, UserHelper
+} from "@test/helper";
 import request from "supertest";
 const userHelper = new UserHelper({ app, endpointUser });
 const createConversationHelper = new CreateConversationHelper({
   app, endpointConversation, endpointUser
 });
+const messageHelper = new MessageHelper({ app, endpointMessage });
+const messageStory = new MessageStory({ createConversationHelper, messageHelper });
 const firstUserData = {
   name: "Matheo",
   email: "matheo.miquel@gmail.com",
@@ -55,7 +59,7 @@ describe("conversation module", () => {
           conversationId: conversation.body.id
         });
       const conversationWithUser = await request(app)
-        .get(`/${endpointConversation}/${conversation.body.id}`)
+        .get(`/${endpointConversation}/user/${conversation.body.id}`)
         .set("Authorization", `Bearer ${creator.body.token}`);
       expect(conversationWithUser.statusCode).toBe(200);
       expect(conversationWithUser.body.users[1]).toMatchObject({
@@ -73,7 +77,7 @@ describe("conversation module", () => {
       });
       const standardUser = await userHelper.register(secondUserData);
       const conversationWithUser = await request(app)
-        .get(`/${endpointConversation}/${conversation.body.id}`)
+        .get(`/${endpointConversation}/user/${conversation.body.id}`)
         .set("Authorization", `Bearer ${standardUser.body.token}`);
       expect(conversationWithUser.statusCode).toBe(403);
     });
@@ -91,6 +95,33 @@ describe("conversation module", () => {
       expect(conversationWithUser.statusCode).toBe(404);
     });
   });
+
+  describe("get conversation with message", () => {
+    it("get conversation with message inside", async () => {
+      const messageContent = "i'm a message";
+      const { creator, conversation } = await messageStory.create({
+        ...firstUserData,
+        ...conversationData,
+        userName: firstUserData.name,
+        conversationName: conversationData.name,
+        messageContent
+      });
+      const conversationWithMessage = await request(app)
+        .get(`/${endpointConversation}/message/${conversation.body.id}`)
+        .set("Authorization", `Bearer ${creator.body.token}`);
+      expect(conversationWithMessage.statusCode).toBe(200);
+      expect(conversationWithMessage.body).toMatchObject({
+        id: conversation.body.id,
+        name: conversationData.name,
+        admin: creator.body.id,
+        messages: [{
+          id: conversationWithMessage.body.messages[0].id,
+          content: messageContent
+        }]
+      });
+    });
+  });
+
   describe("add user to conversation", () => {
     it("add user to a conversation", async () => {
       const { creator, conversation } = await createConversationHelper.create({
@@ -154,7 +185,7 @@ describe("conversation module", () => {
         });
       expect(removedUser.status).toBe(204);
       const conversationWithUser = await request(app)
-        .get(`/${endpointConversation}/${conversation.body.id}`)
+        .get(`/${endpointConversation}/user/${conversation.body.id}`)
         .set("Authorization", `Bearer ${creator.body.token}`);
       expect(conversationWithUser.status).toBe(200);
       expect(conversationWithUser.body.users.length).toBe(1);
@@ -183,7 +214,7 @@ describe("conversation module", () => {
         });
       expect(removedUser.status).toBe(204);
       const conversationWithUser = await request(app)
-        .get(`/${endpointConversation}/${conversation.body.id}`)
+        .get(`/${endpointConversation}/user/${conversation.body.id}`)
         .set("Authorization", `Bearer ${creator.body.token}`);
       expect(conversationWithUser.status).toBe(200);
       expect(conversationWithUser.body.users.length).toBe(1);
@@ -220,7 +251,7 @@ describe("conversation module", () => {
         });
       expect(removedUser.status).toBe(403);
       const conversationWithUser = await request(app)
-        .get(`/${endpointConversation}/${conversation.body.id}`)
+        .get(`/${endpointConversation}/user/${conversation.body.id}`)
         .set("Authorization", `Bearer ${creator.body.token}`);
       expect(conversationWithUser.status).toBe(200);
       expect(conversationWithUser.body.users.length).toBe(3);
@@ -250,7 +281,7 @@ describe("conversation module", () => {
         });
       expect(removedUser.status).toBe(403);
       const conversationWithUser = await request(app)
-        .get(`/${endpointConversation}/${conversation.body.id}`)
+        .get(`/${endpointConversation}/user/${conversation.body.id}`)
         .set("Authorization", `Bearer ${creator.body.token}`);
       expect(conversationWithUser.status).toBe(200);
       expect(conversationWithUser.body.users.length).toBe(2);

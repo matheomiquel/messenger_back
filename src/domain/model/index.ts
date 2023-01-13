@@ -1,4 +1,3 @@
-export { Conversation, ConversationWithUsers } from "./conversation";
+export { Conversation, ConversationWithMessages, ConversationWithUsers } from "./conversation";
 export { Message } from "./message";
-export { User } from "./user";
-export { UserWithToken } from "./userWithToken";
+export { User, UserWithToken } from "./user";

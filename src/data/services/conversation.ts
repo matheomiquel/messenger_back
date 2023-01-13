@@ -1,8 +1,11 @@
-import { ConversationDB, ConversationWithUsersDB } from "@data/model";
-import { ConversationModel, UserHasConverstionModel, UserModel } from "@data/sequelizeModel";
+import { ConversationDB, conversationWithMessageDB, ConversationWithUsersDB } from "@data/model";
+import {
+  ConversationModel, MessageModel, UserHasConverstionModel, UserModel
+} from "@data/sequelizeModel";
 import { ConversationInterface } from "@domain/interface";
 import { createError } from "@src/createError";
 import { Conversation, ConversationWithUsers } from "@src/domain/model";
+import { ConversationWithMessages } from "@src/domain/model/conversation/conversationWithMessage";
 export class ConversationData implements ConversationInterface {
   private readonly conversationModel: typeof ConversationModel;
 
@@ -52,6 +55,32 @@ export class ConversationData implements ConversationInterface {
       name: conversationWithUserDB.name,
       admin: conversationWithUserDB.admin,
       users: conversationWithUserDB.conversation_has_user
+    });
+    return conversation;
+  }
+
+  async getConversationWithMessage({ id, limit, offset }: {
+    id: number,
+    limit: Number,
+    offset: Number
+  }): Promise<ConversationWithMessages> {
+    const conversationWithUserDB = await this.conversationModel.findByPk(id, {
+      include: [{
+        as: "conversation_messages",
+        model: MessageModel,
+        separate: true,
+        // @ts-ignore-next-line
+        limit,
+        // @ts-ignore-next-line
+        offset
+      }]
+    }) as unknown as conversationWithMessageDB;
+    if (!conversationWithUserDB) throw await createError({ message: ["conversation not found"], status: 404 });
+    const conversation = new ConversationWithMessages({
+      id: conversationWithUserDB.id,
+      name: conversationWithUserDB.name,
+      admin: conversationWithUserDB.admin,
+      messages: conversationWithUserDB.conversation_messages
     });
     return conversation;
   }

@@ -7,6 +7,10 @@ export {
   ConversationResponse,
   ConversationResponseType,
   ConversationsResponse,
+  ConversationWithMessagesRequest,
+  ConversationWithMessagesRequestType,
+  ConversationWithMessagesResponse,
+  ConversationWithMessagesResponseType,
   ConversationWithUsersRequest,
   ConversationWithUsersRequestType,
   ConversationWithUsersResponse,
@@ -24,6 +28,8 @@ export {
   CreateMessageRequestType,
   CreateMessageResponse,
   CreateMessageResponseType,
+  MessageResponse,
+  MessageResponseType,
   UpdateMessageRequest,
   UpdateMessageRequestType
 } from "./message";

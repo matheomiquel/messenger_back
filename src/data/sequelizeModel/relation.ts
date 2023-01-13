@@ -25,6 +25,12 @@ ConversationModel.belongsToMany(
   }
 );
 
+ConversationModel.hasMany(MessageModel, {
+  foreignKey: "conversation_id",
+  sourceKey: "id",
+  as: "conversation_messages"
+});
+
 UserModel.belongsToMany(
   ConversationModel,
   {
@@ -35,6 +41,12 @@ UserModel.belongsToMany(
     otherKey: "conversation_id"
   }
 );
+
+UserModel.hasMany(MessageModel, {
+  foreignKey: "user_id",
+  sourceKey: "id",
+  as: "user_messages"
+});
 
 MessageModel.belongsTo(
   UserModel,

@@ -1,5 +1,5 @@
 export { ConversationHelper } from "./conversation";
-export { CreateConversationHelper } from "./integration";
+export { AddNewUserToConversation, CreateConversationHelper, MessageStory } from "./integration";
 export { MessageHelper } from "./message";
 export { reset } from "./resetBdd";
 export { UserHelper } from "./user";

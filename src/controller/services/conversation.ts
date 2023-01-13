@@ -3,7 +3,7 @@ import {
   AddUserRequestType, ConversationWithUsersRequestType, ConversationWithUsersResponseType,
   UpdateConversationRequestType
 } from "@controller/schema";
-import { ConversationRequestType, ConversationResponseType } from "@controller/schema/conversation";
+import { ConversationRequestType, ConversationResponseType, ConversationWithMessagesResponseType } from "@controller/schema/conversation";
 import { CommonValidator, ConversationValidator } from "@controller/validator";
 import { UserDomain } from "@domain/services";
 import { ConversationDomain } from "@src/domain/services/conversation";
@@ -37,14 +37,30 @@ export class ConversationService {
     return { status: 200, data: users };
   }
 
-  async readConversationByUserId(req: requestType<ConversationWithUsersRequestType>):
+  async getConversationWithUser(req: requestType<ConversationWithUsersRequestType>):
     responseType<200, ConversationWithUsersResponseType> {
     await this.commonValidator.id(req.params);
     const decodedToken = await UserDomain.getToken({ token: String(req.token) });
-    const users = await this.conversationDomain.getConversationWithUser({
+    const conversation = await this.conversationDomain.getConversationWithUser({
       userId: decodedToken.id, conversationId: req.params.id
     });
-    return { status: 200, data: users };
+    return { status: 200, data: conversation };
+  }
+
+  async getConversationWIthMessage(req: requestType<ConversationWithUsersRequestType>):
+    responseType<200, ConversationWithMessagesResponseType> {
+    const getConversationData = {
+      limit: Number(req.query.limit) || 10,
+      offset: Number(req.query.offset) || 0
+    };
+    await this.commonValidator.id(req.params);
+    const decodedToken = await UserDomain.getToken({ token: String(req.token) });
+    const conversation = await this.conversationDomain.getConversationWithMessage({
+      userId: decodedToken.id,
+      conversationId: req.params.id,
+      ...getConversationData
+    });
+    return { status: 200, data: conversation };
   }
 
   async create(req: requestType<ConversationRequestType>):
