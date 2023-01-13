@@ -36,6 +36,20 @@ export class MessageData implements MessageInterface {
     });
   }
 
+  async getByConversationId({ conversationId }: { conversationId: number }): Promise<Message[]> {
+    const messages = await this.messageModel.findAll({
+      where: {
+        conversation_id: conversationId
+      }
+    }) as unknown as MessageDB[];
+    return messages.map((message) => new Message({
+      id: message.id,
+      content: message.content,
+      userId: message.user_id,
+      conversationId: message.conversation_id
+    }));
+  }
+
   async create({ userId, content, conversationId }:
     { userId: number; content: string; conversationId: number }): Promise<Message> {
     const message = await this.messageModel.create({

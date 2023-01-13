@@ -7,4 +7,18 @@ const CreateMessageResponse = Joi.object({
   content: Joi.string().required().example(content)
 });
 
-export { CreateMessageResponse };
+const MessageResponse = Joi.object({
+  id: Joi.number().required().example(1),
+  userId: Joi.number().required().example(1),
+  content: Joi.string().required().example(content),
+  conversationId: Joi.number().required().example(1)
+});
+
+type MessageResponseType = {
+  id: number,
+  userId: number,
+  conversationId: number,
+  content: string
+}
+
+export { CreateMessageResponse, MessageResponse, MessageResponseType };

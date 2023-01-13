@@ -1,4 +1,4 @@
-import * as Joi from "joi";
+import Joi from "joi";
 const name = "Matheo";
 const email = "matheo@gmail.com";
 
@@ -9,9 +9,9 @@ const UserResponse = Joi.object({
 });
 
 type UserResponseType = {
-    id: number,
-    name: string,
-    email: string
+  id: number,
+  name: string,
+  email: string
 }
 
 export { UserResponse, UserResponseType };

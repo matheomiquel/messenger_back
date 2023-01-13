@@ -36,8 +36,17 @@ export class ConversationRoute {
     this.createRoute.createHttpRoute(
       {
         method: GET,
-        path: `/${endpointConversation}/:id`,
-        handler: this.conversationService.readConversationByUserId,
+        path: `/${endpointConversation}/user/:id`,
+        handler: this.conversationService.getConversationWithUser,
+        middleware: [authMiddleware],
+        context: this.conversationService
+      }
+    );
+    this.createRoute.createHttpRoute(
+      {
+        method: GET,
+        path: `/${endpointConversation}/message/:id`,
+        handler: this.conversationService.getConversationWIthMessage,
         middleware: [authMiddleware],
         context: this.conversationService
       }

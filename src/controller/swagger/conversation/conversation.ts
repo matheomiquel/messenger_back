@@ -5,6 +5,7 @@ import {
   createConversationSwagger,
   deleteConversationSwagger,
   readAllConversationSwagger,
+  readConversationWithMessagesSwagger,
   readConversationWithUser,
   updateConversationSwagger
 } from "./crud";
@@ -18,6 +19,12 @@ const conversationSwagger = {
     get: { ...readConversationWithUser },
     put: { ...updateConversationSwagger },
     delete: { ...deleteConversationSwagger }
+  },
+  [`/${endpointConversation}/user/{id}`]: {
+    get: { ...readConversationWithUser }
+  },
+  [`/${endpointConversation}/message/{id}`]: {
+    get: { ...readConversationWithMessagesSwagger }
   },
   [`/${endpointConversation}/addUser`]: {
     post: addUserConversationSwagger

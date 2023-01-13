@@ -16,7 +16,13 @@ export class ConversationWithUsers {
     this.name = name;
     this.admin = admin;
     this.users = users.length
-      ? users.map((u) => { return new User({ id: u.id, email: u.email, name: u.name }); })
+      ? users.map((user) => {
+        return new User({
+          id: user.id,
+          email: user.email,
+          name: user.name
+        });
+      })
       : [];
   }
 }

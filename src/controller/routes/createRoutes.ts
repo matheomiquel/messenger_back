@@ -50,6 +50,7 @@ export class CreateRoute {
         const error = await e as ErrorType;
         return res.status(error.status).send(error.message);
       }
+      console.log(e); // eslint-disable-line no-console
       return res.status(500).send({ message: "erreur inconnue" });
     }
   }
