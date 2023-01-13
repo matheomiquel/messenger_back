@@ -5,6 +5,12 @@ export {
 } from "./conversation";
 export { ConversationsResponse } from "./conversations";
 export {
+  ConversationWithMessagesRequest,
+  ConversationWithMessagesRequestType,
+  ConversationWithMessagesResponse,
+  ConversationWithMessagesResponseType
+} from "./conversationWithMessages";
+export {
   ConversationWithUsersRequest,
   ConversationWithUsersRequestType,
   ConversationWithUsersResponse,

@@ -1,5 +1,5 @@
 import { ConversationInterface, UserInterface } from "@domain/interface";
-import { Conversation, ConversationWithUsers } from "@domain/model";
+import { Conversation, ConversationWithMessages, ConversationWithUsers } from "@domain/model";
 import { createError } from "@src/createError";
 
 export class ConversationDomain {
@@ -20,13 +20,31 @@ export class ConversationDomain {
 
   async getConversationWithUser({ userId, conversationId }:
     { userId: number, conversationId: number }): Promise<ConversationWithUsers> {
-    const conversation = await this.conversationProvider.getConversationWithUser(
+    const conversationWithUser = await this.conversationProvider.getConversationWithUser(
       { id: conversationId }
     );
-    if (conversation.users.every(((user) => user.id !== userId))) {
+    if (conversationWithUser.users.every(((user) => user.id !== userId))) {
       throw await createError({ message: ["you don't have acces to this information"], status: 403 });
     }
-    return conversation;
+    return conversationWithUser;
+  }
+
+  async getConversationWithMessage({
+    userId, conversationId, limit, offset
+  }:
+    {
+      userId: number,
+      conversationId: number,
+      limit: Number,
+      offset: Number
+    }):
+    Promise<ConversationWithMessages> {
+    await this.getConversationWithUser({ userId, conversationId });
+    return this.conversationProvider.getConversationWithMessage({
+      id: conversationId,
+      limit,
+      offset
+    });
   }
 
   async create({ userId, name }: { userId: number, name: string }): Promise<Conversation> {

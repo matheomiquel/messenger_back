@@ -1,5 +1,6 @@
 export {
   ConversationDB,
+  conversationWithMessageDB,
   ConversationWithUsersDB
 } from "./conversation";
 export {
