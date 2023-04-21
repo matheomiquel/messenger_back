@@ -42,7 +42,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerConfig));
 const createRoute = new CreateRoute({ app, res: response });
 
 app.get("/health", async (req: Request, res: Response): Promise<Response> => {
-  return res.status(204).send();
+  return res.status(200).send();
 });
 
 /// //////////////////////////////MODEL////////////////////////////////////////////
