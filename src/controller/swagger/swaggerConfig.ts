@@ -2,16 +2,11 @@ import {
   conversationSwagger
 } from "./conversation";
 import {
-  messageCrudSwagger
+  messageSwagger
 } from "./message";
 import { tags } from "./tags";
 import {
-  getAllSwager,
-  GetByIdSwagger,
-  getByTokenSwagger,
-  getConversationsFromUserSwagger,
-  loginSwagger,
-  registerSwagger
+  userSwagger
 } from "./user";
 export const swaggerConfig = {
   openapi: "3.0.0",
@@ -39,13 +34,8 @@ export const swaggerConfig = {
   consumes: ["application/json"],
   produces: ["application/json"],
   paths: {
-    ...registerSwagger,
-    ...loginSwagger,
-    ...getAllSwager,
-    ...GetByIdSwagger,
-    ...getByTokenSwagger,
-    ...messageCrudSwagger,
-    ...conversationSwagger,
-    ...getConversationsFromUserSwagger
+    ...userSwagger,
+    ...messageSwagger,
+    ...conversationSwagger
   }
 };
