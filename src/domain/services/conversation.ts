@@ -35,8 +35,8 @@ export class ConversationDomain {
     {
       userId: number,
       conversationId: number,
-      limit: Number,
-      offset: Number
+      limit: number,
+      offset: number
     }):
     Promise<ConversationWithMessages> {
     await this.getConversationWithUser({ userId, conversationId });

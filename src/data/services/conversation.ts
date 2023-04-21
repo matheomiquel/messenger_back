@@ -61,17 +61,15 @@ export class ConversationData implements ConversationInterface {
 
   async getConversationWithMessage({ id, limit, offset }: {
     id: number,
-    limit: Number,
-    offset: Number
+    limit: number,
+    offset: number
   }): Promise<ConversationWithMessages> {
     const conversationWithUserDB = await this.conversationModel.findByPk(id, {
       include: [{
         as: "conversation_messages",
         model: MessageModel,
         separate: true,
-        // @ts-ignore-next-line
         limit,
-        // @ts-ignore-next-line
         offset
       }]
     }) as unknown as conversationWithMessageDB;

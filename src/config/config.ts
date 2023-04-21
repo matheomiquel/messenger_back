@@ -3,7 +3,7 @@ import { env } from "./envType";
 const config: env = {
   development: {
     username: "root",
-    password: "password",
+    password: "root",
     database: "messenger",
     host: "127.0.0.1",
     dialect: "mysql",
@@ -11,7 +11,7 @@ const config: env = {
   },
   test: {
     username: "root",
-    password: "password",
+    password: "root",
     database: "messenger_test",
     host: "127.0.0.1",
     dialect: "mysql",
@@ -19,7 +19,7 @@ const config: env = {
   },
   production: {
     username: "root",
-    password: "password",
+    password: "root",
     database: "database_production",
     host: "127.0.0.1",
     dialect: "mysql",

@@ -41,7 +41,7 @@ const PORT = process.env.PORT ?? 3000;
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerConfig));
 const createRoute = new CreateRoute({ app, res: response });
 
-app.get("/health", async function checkAlive(req: Request, res: Response): Promise<Response> {
+app.get("/health", async (req: Request, res: Response): Promise<Response> => {
   return res.status(204).send();
 });
 
@@ -89,8 +89,6 @@ const conversationRoute = new ConversationRoute({ createRoute, conversationServi
 userRoute.init();
 messageRoute.init();
 conversationRoute.init();
-const tutu = "toto";
-export { tutu };
 app.all("*", async function NotFound(req: Request, res: Response) {
   res.status(404).send({
     message: "route not found"

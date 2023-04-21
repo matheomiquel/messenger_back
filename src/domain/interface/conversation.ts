@@ -6,8 +6,8 @@ export interface ConversationInterface {
     getConversationWithUser({ id }: { id: number }): Promise<ConversationWithUsers>
     getConversationWithMessage({ id, limit, offset }: {
         id: number,
-        limit: Number,
-        offset: Number
+        limit: number,
+        offset: number
     }): Promise<ConversationWithMessages>
     getById({ id }: { id: number }): Promise<Conversation>
     create({ userId, name }: { userId: number; name: string; }): Promise<Conversation>

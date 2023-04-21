@@ -6,7 +6,7 @@ import {
   readAllMessageSwager,
   updateMessageSwagger
 } from "./crud";
-const messageCrudSwagger = {
+const messageSwagger = {
   [`/${endpointMessage}`]: {
     get: { ...readAllMessageSwager },
     post: { ...createMessageSwagger }
@@ -17,4 +17,4 @@ const messageCrudSwagger = {
   }
 
 };
-export { messageCrudSwagger };
+export { messageSwagger };

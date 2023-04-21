@@ -1,6 +1,6 @@
 import { endpointConversation } from "@controller/routes";
 
-import { addUserConversationSwagger } from "./addConversation";
+import { addUserConversationSwagger } from "./addUserToConversation";
 import {
   createConversationSwagger,
   deleteConversationSwagger,

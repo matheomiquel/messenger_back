@@ -7,5 +7,5 @@ export type requestType<Body> = {
     params: {
         [key: string]: any
     },
-    token :string | undefined
+    token: string | undefined
 }
