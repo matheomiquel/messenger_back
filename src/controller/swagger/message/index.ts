@@ -4,4 +4,4 @@ export {
   readAllMessageSwager,
   updateMessageSwagger
 } from "./crud";
-export { messageCrudSwagger } from "./message";
+export { messageSwagger } from "./message";
